@@ -1,0 +1,271 @@
+<div id="cmdb_management_idc" style="width: 100%;"></div>
+
+<div id="cmdb_management_idc_toolbar" style="padding:0px;">
+    <!--<div style="margin-bottom:5px">
+        <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="manager_tool.add()">添加</a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="manager_tool.edit()">编辑</a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-save" plain="true">保存</a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="manager_tool.remove()">删除</a>
+    </div>-->
+
+    <div class="opt-buttons" style="margin-left: 20px; padding: 5px 0">
+        <select id="search_object" class="easyui-combobox" editable="false" style="height:35px;width:100px;">
+            <option value="ip">IP地址</option>
+            <option value="idc">IDC</option>
+            <option value="admin">运维人</option>
+            <option value="user">使用人</option>
+        </select>
+        <select id="search_operator" class="easyui-combobox" editable="false" style="height:35px;width:166px;">
+            <option value="exact">精确匹配</option>
+            <option value="like">模糊匹配</option>
+        </select>
+        <input id="search_value" class="easyui-textbox" type="text" prompt="请输入搜索内容" style="width:166px;height:35px;line-height:35px;"></input>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-search" data-options="selected:true" onclick="search_func()">查询</a>
+        <a href="#" class="easyui-linkbutton more" iconCls="icon-more">批量查询</a>
+        <a href="#" class="easyui-linkbutton more" iconCls="icon-reload" onclick="load_default_data()">重置</a>
+        <!--<a href="#" class="easyui-linkbutton" iconCls="icon-add" onclick="manager_tool.option_admin()">运维事件</a>-->
+        <a href="#" class="easyui-linkbutton">Excel导出</a>
+        <a href="#" id="data_management_btn" class="easyui-linkbutton" iconCls="icon-data-management" onclick="data_management_tools.open()">数据维护</a>
+    </div>
+
+    <div id="add_search" style="display:none">
+        <div id="" class="opt-buttons" style="margin-left: 20px;">
+            <select class="easyui-combobox" editable="false" style="height:35px;width:100px;">
+                <option>IP地址</option>
+                <option>IDC</option>
+                <option>运维人</option>
+                <option>使用人</option>
+            </select>
+            <select class="easyui-combobox" editable="false" style="height:35px;width:166px;">
+                <option>精确匹配</option>
+                <option>模糊匹配</option>
+            </select>
+            <input class="easyui-textbox" type="text" prompt="请输入搜索内容" name="code" style="width:166px;height:35px;line-height:35px;"></input>
+        </div>
+        <div id="" class="opt-buttons" style="margin-left: 20px;">
+            <select class="easyui-combobox" editable="false" name="ip" style="height:35px;width:100px;">
+                <option>IP地址</option>
+                <option>IDC</option>
+                <option>运维人</option>
+                <option>使用人</option>
+            </select>
+            <select class="easyui-combobox" editable="false" name="language" style="height:35px;width:166px;">
+                <option>精确匹配</option>
+                <option>模糊匹配</option>
+            </select>
+            <input class="easyui-textbox" type="text" prompt="请输入搜索内容" name="code" style="width:166px;height:35px;line-height:35px;"></input>
+        </div>
+    </div>
+
+    <div id="data_management" class="opt-buttons" style="margin: 0 0 10px 20px; display: none">
+        <a href="#" class="easyui-linkbutton" iconCls="icon-excel" onclick="excel_upload_tools()">Excel导入</a>
+        <a id="manager_edit_btn" href="#" class="easyui-linkbutton" iconCls="icon-add" onclick="manager_edit_tools.edit()">数据编辑</a>
+        <span id="manager_edit_toolbar" style="display: none">
+            <a href="#" class="easyui-linkbutton" iconCls="icon-add" onclick="manager_edit_tools.save()">保存</a>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-add" onclick="manager_edit_tools.reject()">取消</a>
+        </span>
+    </div>
+
+</div>
+
+<script>
+
+    function load_data(search_items) {
+        $('#cmdb_management_idc').datagrid({
+            url: '/cmdb/get_data/',
+            queryParams: {
+                search_items: search_items,
+            },
+            traditional: true,
+            loadMsg: '数据加载中...',
+            fit: true,
+            fitColumns: true,
+            striped: true,
+            rownumbers: true,
+            border: false,
+            pagination: true,
+            pageSize: 20,
+            pageList: [10, 20, 30, 40, 50],
+            pageNumber: 1,
+            sortName: 'id',
+            sortOrder: 'desc',
+            remoteSort: false,
+            toolbar: '#cmdb_management_idc_toolbar',
+            frozenColumns: [[
+                {
+                    field: 'id',
+                    title: '序号',
+                    width: 10,
+                    checkbox: true,
+                },
+                {
+                    field: 'idc',
+                    title: 'IDC',
+                    width: 120,
+                    sortable: true,
+                    align: 'center',
+                    editor: {
+                        type: 'combobox',
+                        options: {
+                            method: 'get',
+                            url: '/cmdb/get_idc_all/',
+                            valueField: 'name',
+                            textField: 'name',
+                            editable: false,
+                            required: true,
+                        },
+                    },
+                },
+                {
+                    field: 'ip',
+                    title: 'IP地址',
+                    width: 100,
+                    //sortable: true,
+                    align: 'center',
+                },
+            ]],
+            columns: [[
+                {
+                    field: 'sn',
+                    title: 'SN',
+                    width: 60,
+                    //sortable: true,
+                    align: 'center',
+                },
+                {
+                    field: 'asset_type',
+                    title: '资产类型',
+                    width: 60,
+                    //sortable: true,
+                    align: 'center',
+                    editor: {
+                        type: 'combobox',
+                        options: {
+                            method: 'get',
+                            url: '/cmdb/get_asset_type_all/',
+                            valueField: 'asset_value',
+                            textField: 'asset_name',
+                            editable: false,
+                            required: true,
+                        },
+                    },
+                },
+                {
+                    field: 'manufactory',
+                    title: '生产厂商',
+                    width: 40,
+                    //sortable: true,
+                    align: 'center',
+                    editor: {
+                        type: 'combobox',
+                        options: {
+                            method: 'get',
+                            url: '/cmdb/get_manufactory_all/',
+                            valueField: 'manufactory',
+                            textField: 'manufactory',
+                            editable: false,
+                            required: true,
+                        },
+                    },
+                },
+                {
+                    field: 'model',
+                    title: '设备型号',
+                    width: 60,
+                    //sortable: true,
+                    align: 'center',
+                },
+                {
+                    field: 'os_type',
+                    title: '操作系统',
+                    width: 60,
+                    //sortable: true,
+                    align: 'center',
+                },
+                {
+                    field: 'os_version',
+                    title: '系统版本',
+                    width: 80,
+                    //sortable: true,
+                    align: 'center',
+                },
+                {
+                    field: 'configuration',
+                    title: '配置(CPU/内存/硬盘)',
+                    width: 80,
+                    //sortable: true,
+                    align: 'center',
+                },
+                {
+                    field: 'admin',
+                    title: '运维人',
+                    width: 40,
+                    //sortable: true,
+                    align: 'center',
+                    editor: {
+                        type: 'validatebox',
+                        options: {
+                            required: true,
+                        },
+                    },
+
+                },
+                {
+                    field: 'user',
+                    title: '使用人',
+                    width: 40,
+                    //sortable: true,
+                    align: 'center',
+                    editor: {
+                        type: 'validatebox',
+                        options: {
+                            required: true,
+                        },
+                    },
+
+                },
+                {
+                    field: 'use_dept',
+                    title: '使用部门',
+                    width: 60,
+                    //sortable: true,
+                    align: 'center',
+                    editor: {
+                        type: 'validatebox',
+                        options: {
+                            required: true,
+                        },
+                    },
+
+                },
+                {
+                    field: 'option_data',
+                    title: '操作',
+                    width: 40,
+                    //sortable: true,
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        return '<a href="#" class="easyui-linkbutton l-btn l-btn-small l-btn-selected" style="height:20px;line-height:20px" onclick="server_detail_fn(' + row.id + ')">查看详情</a>';
+                    }
+
+                },
+            ]],
+        });
+
+        // 初始化分页
+        $('#cmdb_management_idc').datagrid('getPager').pagination({
+            beforePageText: '第',
+            afterPageText: '页 共{pages}页',
+            displayMsg: '当前显示{from}-{to}条记录 共{total}条数据',
+        });
+
+    };
+
+    // 默认数据加载
+    function load_default_data() {
+        load_data(JSON.stringify([{'tag': 'default', 'operator': '', 'value': ''}]));
+    }
+
+    load_default_data()
+
+</script>

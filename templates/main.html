@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BMT运维管理系统</title>
+    <link href="/statics/css/base.css" rel="stylesheet">
+    <link href="/statics/css/platform.css" rel="stylesheet">
+    <link rel="stylesheet" href="/statics/custom/uimaker/easyui.css">
+    <link rel="stylesheet" href="/statics/custom/uimaker/icon.css">
+
+    {% block css %}{% endblock%}
+
+</head>
+<body>
+    <div class="container">
+        <div id="pf-hd">
+            <div class="pf-logo">
+                <!--<img src="/statics/images/bmtLogo.png" alt="logo">-->
+            </div>
+
+            <div class="pf-user">
+                <div class="pf-user-photo">
+                    <img src="/statics/images/main/user.png" alt="">
+                </div>
+                <h4 class="pf-user-name ellipsis">欢迎您：测试用户</h4>
+                <i class="iconfont xiala">&#xe607;</i>
+
+                <!--<div class="pf-user-panel">
+                    <ul class="pf-user-opt">
+                        <li class="pf-logout">
+                            <a href="login.html">
+                                <i class="iconfont">&#xe60e;</i>
+                                <span class="pf-opt-name">退出系统</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>-->
+            </div>
+
+        </div>
+
+        <div id="pf-bd">
+            <div id="pf-sider">
+                <h2 class="pf-model-name">
+                    <!--<span class="iconfont">&#xe64a;</span>-->
+                    <span class="pf-name"></span>
+                    <span class="toggle-icon"></span>
+                </h2>
+
+                <ul class="sider-nav">
+                     <li class="current">
+                        <a href="javascript:;">
+                            <span class="iconfont sider-nav-icon">&#xe620;</span>
+                            <span class="sider-nav-title">CMDB配置管理</span>
+                            <i class="iconfont">&#xe642;</i>
+                        </a>
+                        <ul class="sider-nav-s">
+                           <li class=""><a class="nav-node" href="#" onclick="select_tab('href', '资产信息','/cmdb/test1/')" title="资产信息">资产信息</a></li>
+                        </ul>
+                        <ul class="sider-nav-s">
+                           <li class=""><a class="nav-node" href="#" onclick="select_tab('href', '数据管理','/cmdb/management/')" title="数据管理">数据管理</a></li>
+                        </ul>
+                     </li>
+                    <li class="">
+                        <a href="javascript:;">
+                            <span class="iconfont sider-nav-icon">&#xe620;</span>
+                            <span class="sider-nav-title">后台数据管理</span>
+                            <i class="iconfont">&#xe642;</i>
+                        </a>
+                        <ul class="sider-nav-s">
+                           <li class=""><a class="nav-node" href="#" onclick="select_tab('href', 'IDC机房配置','/cmdb/management/idc/')" title="IDC机房配置">IDC机房配置</a></li>
+                        </ul>
+                        <ul class="sider-nav-s">
+                           <li class=""><a class="nav-node" href="#" onclick="select_tab('href', '数据管理','/cmdb/management/')" title="数据管理">部门组织架构</a></li>
+                        </ul>
+                        <ul class="sider-nav-s">
+                           <li class=""><a class="nav-node" href="#" onclick="select_tab('href', '数据管理','/cmdb/management/')" title="数据管理">设备厂商管理</a></li>
+                        </ul>
+                    </li>
+                    <li class="">
+                        <a href="javascript:;">
+                            <span class="iconfont sider-nav-icon">&#xe620;</span>
+                            <span class="sider-nav-title">用户关系配置</span>
+                            <i class="iconfont">&#xe642;</i>
+                        </a>
+                        <ul class="sider-nav-s">
+                           <li class=""><a class="nav-node" href="#" onclick="select_tab('href', 'IDC机房配置','/cmdb/management/idc/')" title="IDC机房配置">用户配置管理</a></li>
+                        </ul>
+                        <ul class="sider-nav-s">
+                           <li class=""><a class="nav-node" href="#" onclick="select_tab('href', '数据管理','/cmdb/management/')" title="数据管理">权限配置管理</a></li>
+                        </ul>
+                        <ul class="sider-nav-s">
+                           <li class=""><a class="nav-node" href="#" onclick="select_tab('href', '数据管理','/cmdb/management/')" title="数据管理">角色配置管理</a></li>
+                        </ul>
+                    </li>
+                 </ul> 
+            </div>
+
+            <div id="pf-page">
+                <div class="easyui-tabs1" style="width:100%;height:100%;">
+                  <div title="首页" style="padding:10px 5px 5px 10px;">
+                    <iframe class="page-iframe" src="/cmdb/main/" frameborder="no" border="no" height="100%" width="100%" scrolling="auto"></iframe>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="pf-ft">
+            <div class="system-name">
+              <i class="iconfont">&#xe6fe;</i>
+              <span>CMDB资产配置管理系统&nbsp;测试版 V0.1</span>
+            </div>
+            <div class="copyright-name">
+              <span>CopyRight&nbsp;2017&nbsp;&nbsp;bmt.jd.com&nbsp;BMT运维管理系统</span>
+              <i class="iconfont" >&#xe6ff;</i>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="/statics/custom/jquery.min.js"></script>
+    <script type="text/javascript" src="/statics/custom/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/statics/js/main.js"></script>
+
+
+    <script type="text/javascript">
+
+        function select_tab(openTag, nodeText, nodeUrl) {
+            if ($('.easyui-tabs1').tabs('exists', nodeText)) {
+                $('.easyui-tabs1').tabs('select', nodeText);
+            } else {
+                if (openTag == "href") {
+                    $('.easyui-tabs1').tabs('add', {
+                        title: nodeText,
+                        iconCls: 'icon-search',
+                        closable: true,
+                        href: nodeUrl,
+                    });
+                } else if ( openTag == "iframe" ){
+                    var content = '<iframe scrolling="no" frameborder="0"  src="' + nodeUrl +'" style="width:100%;height:100%;"></iframe>';
+                    $('.easyui-tabs1').tabs('add',{
+                        title:nodeText,
+                        closable:true,
+                        content:content,
+                        iconCls:'icon-add'
+                    });
+                }
+            }
+        }
+
+    $('.nav_node').click()
+
+    $('.easyui-tabs1').tabs({
+      tabHeight: 44,
+      onSelect:function(title,index){
+        var currentTab = $('.easyui-tabs1').tabs("getSelected");
+        if(currentTab.find("iframe") && currentTab.find("iframe").size()){
+            currentTab.find("iframe").attr("src",currentTab.find("iframe").attr("src"));
+        }
+      }
+    })
+
+    $(window).resize(function(){
+          $('.tabs-panels').height($("#pf-page").height()-46);
+          $('.panel-body').height($("#pf-page").height()-76)
+    }).resize();
+
+    var page = 0,
+        pages = ($('.pf-nav').height() / 70) - 1;
+
+    if(pages === 0){
+      $('.pf-nav-prev,.pf-nav-next').hide();
+    }
+
+    $(document).on('click', '.pf-nav-prev,.pf-nav-next', function(){
+
+      if($(this).hasClass('disabled')) return;
+      if($(this).hasClass('pf-nav-next')){
+        page++;
+        $('.pf-nav').stop().animate({'margin-top': -70*page}, 200);
+        if(page == pages){
+          $(this).addClass('disabled');
+          $('.pf-nav-prev').removeClass('disabled');
+        }else{
+          $('.pf-nav-prev').removeClass('disabled');
+        }
+
+      }else{
+        page--;
+        $('.pf-nav').stop().animate({'margin-top': -70*page}, 200);
+        if(page == 0){
+          $(this).addClass('disabled');
+          $('.pf-nav-next').removeClass('disabled');
+        }else{
+          $('.pf-nav-next').removeClass('disabled');
+        }
+
+      }
+    })
+
+    // setTimeout(function(){
+    //    $('.tabs-panels').height($("#pf-page").height()-46);
+    //    $('.panel-body').height($("#pf-page").height()-76)
+    // }, 200)
+
+    </script>
+</body>
+</html>

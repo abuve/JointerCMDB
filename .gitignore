@@ -1,0 +1,7 @@
+# global files
+.git/
+.idea/
+__pycache__
+
+# objects
+migrations/

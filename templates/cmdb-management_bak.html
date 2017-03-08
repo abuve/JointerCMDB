@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>基本信息</title>
+    <link href="/statics/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/statics/custom/uimaker/easyui.css">
+    <link href="/statics/css/basic_info.css" rel="stylesheet">
+</head>
+<body>
+	<div class="container-base-info" style="margin: 10px">
+		<div class="left-tree">
+			<ul class="easyui-tree">
+				<li>
+					<span>数据编辑</span>
+					<ul>
+						<li><span><a onclick="select_tab('IDC机房管理', '/cmdb/management/idc/')">IDC机房管理</a></span></li>
+						<li><span>部门组织架构</span></li>
+						<li><span>设备厂商管理</span></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<div class="content">
+			<div class="easyui-tabs1" style="width:100%; height:100%;">
+
+		    </div>
+		</div>
+	</div>
+
+    <!--<div id="loading" style="position: absolute; z-index: 1000; top: 0px; left: 0px; width: 100%; height: 100%; background: #DDDDDB; text-align: center; padding-top: 20%;"></div>-->
+
+</body>
+</html>
+    <script type="text/javascript" src="/statics/custom/jquery.min.js"></script>
+    <script type="text/javascript" src="/statics/custom/jquery.easyui.min.js"></script>
+
+<script type="text/javascript">
+	$('.easyui-tabs1').tabs({
+      tabHeight: 36
+    });
+    $(window).resize(function(){
+    	$('.easyui-tabs1').tabs("resize");
+    }).resize();
+
+    function select_tab(nodeText, nodeUrl) {
+        if ($('.easyui-tabs1').tabs('exists', nodeText)){
+            $('.easyui-tabs1').tabs('select', nodeText);
+        } else {
+            $('.easyui-tabs1').tabs('add', {
+                title: nodeText,
+                iconCls: 'icon-search',
+                closable:  true,
+                href: nodeUrl,
+            });
+        }
+    }
+
+
+    /*function show(){
+        $("#loading").fadeOut("normal", function(){
+            $(this).remove();
+        });
+    }
+    var delayTime;
+    $.parser.onComplete = function() {
+        if(delayTime)
+            clearTimeout(delayTime);
+        delayTime = setTimeout(show,100);
+    }*/
+
+</script>

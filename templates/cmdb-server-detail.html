@@ -1,0 +1,165 @@
+<link rel="stylesheet" href="/statics/css/basic_info.css">
+
+<div class="container-base-info">
+    <div class="content">
+        <div class="column"><span class="current">基础信息</span></div>
+        <table class="kv-table">
+            <tbody>
+                <tr>
+                    <td class="kv-label">资源类型</td>
+                    <td class="kv-content">{{ result.get_asset_type_display }}</td>
+                    <td class="kv-label">资源名称</td>
+                    <td class="kv-content">{{ result.name }}</td>
+                    <td class="kv-label">资产编号</td>
+                    <td class="kv-content">{{ result.asset_num }}</td>
+                    <td class="kv-label">SN号</td>
+                    <td class="kv-content">{{ result.server.sn }}</td>
+                </tr>
+                <tr>
+                    <td class="kv-label">机房</td>
+                    <td class="kv-content">{{ result.idc.name }}</td>
+                    <td class="kv-label">系统IP地址</td>
+                    <td class="kv-content">{{ result.nic_set.all.0.ipaddress }}</td>
+                    <td class="kv-label">管理IP地址</td>
+                    <td class="kv-content">{{ result.server.management_ip }}</td>
+                    <td class="kv-label">运维人</td>
+                    <td class="kv-content">{{ result.admin }}</td>
+                </tr>
+                <tr>
+                    <td class="kv-label">使用人</td>
+                    <td class="kv-content">{{ result.user }}</td>
+                    <td class="kv-label">使用部门</td>
+                    <td class="kv-content">{{ result.dept }}</td>
+                    <td class="kv-label">生产厂商</td>
+                    <td class="kv-content">{{ result.manufactory.manufactory }}</td>
+                    <td class="kv-label">设备型号</td>
+                    <td class="kv-content">{{ result.server.model }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="column"><span class="current">系统配置</span></div>
+        <table class="kv-table">
+            <tbody>
+                <tr>
+                    <td class="kv-label">系统类型</td>
+                    <td class="kv-content">{{ result.server.os_type }}</td>
+                    <td class="kv-label">发行版本</td>
+                    <td class="kv-content">{{ result.server.os_distribution }}</td>
+                    <td class="kv-label">系统版本</td>
+                    <td class="kv-content">{{ result.server.os_release }}</td>
+                    <td class="kv-label">硬件配置</td>
+                    <td class="kv-content">{{ result.server.configuration }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="column"><span class="current">配置详情-CPU</span></div>
+        <table class="kv-table">
+            <thead>
+                <tr>
+                    <td class="kv-label">CPU型号</t>
+                    <td class="kv-label">CPU个数</t>
+                    <td class="kv-label">CPU核数</t>
+                    <td class="kv-label">备注信息</t>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="kv-content column">{{ result.cpu.cpu_model }}</td>
+                    <td class="kv-content column">{{ result.cpu.cpu_count }}</td>
+                    <td class="kv-content column">{{ result.cpu.cpu_core_count }}</td>
+                    <td class="kv-content column">{{ result.cpu.memo }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="column"><span class="current">配置详情-内存</span></div>
+        <table class="kv-table">
+            <thead>
+                <tr>
+                    <td class="kv-label">序号</t>
+                    <td class="kv-label">SN号</t>
+                    <td class="kv-label">内存型号</t>
+                    <td class="kv-label">PCI插槽</t>
+                    <td class="kv-label">内存容量</t>
+                    <td class="kv-label">备注信息</t>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in result.ram_set.all %}
+                    <tr>
+                        <td class="kv-content column">{{ forloop.counter }}</td>
+                        <td class="kv-content column">{{ item.sn }}</td>
+                        <td class="kv-content column">{{ item.model }}</td>
+                        <td class="kv-content column">{{ item.slot }}</td>
+                        <td class="kv-content column">{{ item.capacity }}</td>
+                        <td class="kv-content column">{{ item.memo }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="column"><span class="current">配置详情-硬盘</span></div>
+        <table class="kv-table">
+            <thead>
+                <tr>
+                    <td class="kv-label">序号</t>
+                    <td class="kv-label">SN号</t>
+                    <td class="kv-label">PCI插槽</t>
+                    <td class="kv-label">制造商</t>
+                    <td class="kv-label">硬盘型号</t>
+                    <td class="kv-label">硬盘容量</t>
+                    <td class="kv-label">接口类型</t>
+                    <td class="kv-label">备注信息</t>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in result.disk_set.all %}
+                    <tr>
+                        <td class="kv-content column">{{ forloop.counter }}</td>
+                        <td class="kv-content column">{{ item.sn }}</td>
+                        <td class="kv-content column">{{ item.slot }}</td>
+                        <td class="kv-content column">{{ item.manufactory }}</td>
+                        <td class="kv-content column">{{ item.model }}</td>
+                        <td class="kv-content column">{{ item.capacity }}</td>
+                        <td class="kv-content column">{{ item.get_iface_type_display }}</td>
+                        <td class="kv-content column">{{ item.memo }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="column"><span class="current">配置详情-网卡</span></div>
+        <table class="kv-table">
+            <thead>
+                <tr>
+                    <td class="kv-label">序号</t>
+                    <td class="kv-label">网卡名称</t>
+                    <td class="kv-label">IP地址</t>
+                    <td class="kv-label">SN号</t>
+                    <td class="kv-label">网卡型号</t>
+                    <td class="kv-label">MAC地址</t>
+                    <td class="kv-label">子网掩码</t>
+                    <td class="kv-label">网关地址</t>
+                    <td class="kv-label">网卡绑定</t>
+                    <td class="kv-label">备注信息</t>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in result.nic_set.all %}
+                    <tr>
+                        <td class="kv-content column">{{ forloop.counter }}</td>
+                        <td class="kv-content column">{{ item.name }}</td>
+                        <td class="kv-content column">{{ item.ipaddress }}</td>
+                        <td class="kv-content column">{{ item.sn }}</td>
+                        <td class="kv-content column">{{ item.model }}</td>
+                        <td class="kv-content column">{{ item.macaddress }}</td>
+                        <td class="kv-content column">{{ item.netmask }}</td>
+                        <td class="kv-content column">网关地址</td>
+                        <td class="kv-content column">{{ item.bonding }}</td>
+                        <td class="kv-content column">{{ item.memo }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+    </div>
+</div>
